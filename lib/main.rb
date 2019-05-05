@@ -1,5 +1,14 @@
 class Main
+  def initialize(parser:)
+    @parser = parser
+  end
+
+  attr_reader :parser
+  private :parser
+
   def call(file_to_be_translated)
+    parsed_code = parser.call(file_to_be_translated)
+
     generate_name_of_output_file(file_to_be_translated)
   end
 

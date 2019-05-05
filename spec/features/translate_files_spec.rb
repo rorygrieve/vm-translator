@@ -1,7 +1,17 @@
 require 'main'
+require 'parser'
 
 RSpec.describe 'Translate files to assembly' do
-  let(:main) { Main.new }
+  subject(:main) {
+    Main.new(
+      parser: parser,
+    )
+  }
+  let(:parser) { class_double(Parser) }
+
+  before do
+    allow(parser).to receive(:call)
+  end
 
   context 'a file containing simple vm commands is added' do
     it 'is translated into assembly' do
