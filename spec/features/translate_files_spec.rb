@@ -24,4 +24,10 @@ RSpec.describe 'Translate files to assembly' do
       expect(File).to exist('lib/output/SimpleAdd.asm')
     end
   end
+
+  after do
+    Dir["lib/output/*"].each do |file|
+      File.delete(file)
+    end
+  end
 end

@@ -11,7 +11,9 @@ class Main
     parsed_code = parser.call(file_to_be_translated)
     assembly_code = code_writer.call(parsed_code)
 
-    generate_name_of_output_file(file_to_be_translated)
+    name_of_output_file = generate_name_of_output_file(file_to_be_translated)
+
+    create_output_file(file_name: name_of_output_file, code: assembly_code)
   end
 
   private
@@ -20,5 +22,11 @@ class Main
     name_of_original_file = file.split("/").last
     name_of_new_file_without_file_type = name_of_original_file.split(".").first
     "lib/output/#{name_of_new_file_without_file_type}.asm"
+  end
+
+  def create_output_file(file_name:, code:)
+    File.open(file_name, "w+") do |f|
+      f.puts(code)
+    end
   end
 end

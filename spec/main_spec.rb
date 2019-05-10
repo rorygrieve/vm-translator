@@ -9,23 +9,26 @@ RSpec.describe Main do
       code_writer: code_writer,
     )
   }
-  let(:parser) { class_double(Parser) }
-  let(:code_writer) { class_double(CodeWriter) }
+  let(:parser) { class_double(Parser, call: 'some parsed vm code') }
+  let(:code_writer) { class_double(CodeWriter, call: nil) }
 
   describe '#call' do
     before do
-      allow(parser).to receive(:call)
-      allow(code_writer).to receive(:call)
+      allow(File).to receive(:open).and_return("something")
+      main.call("spec/fixtures/SomeVMCode.vm")
     end
 
-    it 'outputs name of generated asm file' do
-      expect(main.call('path/to/some-vm-code.vm')).to eq('lib/output/some-vm-code.asm')
+    it "passes the file to the parser" do
+      expect(parser).to have_received(:call).with("spec/fixtures/SomeVMCode.vm")
     end
 
-    it 'passes the file to the parser' do
-      main.call('path/to/some-vm-code.vm')
 
-      expect(parser).to have_received(:call).with('path/to/some-vm-code.vm')
+    it "passes the file to the code writer" do
+      expect(code_writer).to have_received(:call).with("some parsed vm code")
+    end
+
+    it "creates a file with translated code" do
+      expect(File).to have_received(:open).with("lib/output/SomeVMCode.asm", "w+")
     end
   end
 end
