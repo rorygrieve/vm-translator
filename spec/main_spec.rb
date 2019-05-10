@@ -1,17 +1,21 @@
 require 'main'
 require 'parser'
+require 'code_writer'
 
 RSpec.describe Main do
   subject(:main) {
     Main.new(
       parser: parser,
+      code_writer: code_writer,
     )
   }
   let(:parser) { class_double(Parser) }
+  let(:code_writer) { class_double(CodeWriter) }
 
   describe '#call' do
     before do
       allow(parser).to receive(:call)
+      allow(code_writer).to receive(:call)
     end
 
     it 'outputs name of generated asm file' do

@@ -1,16 +1,20 @@
 require 'main'
 require 'parser'
+require 'code_writer'
 
 RSpec.describe 'Translate files to assembly' do
   subject(:main) {
     Main.new(
       parser: parser,
+      code_writer: code_writer,
     )
   }
   let(:parser) { class_double(Parser) }
+  let(:code_writer) { class_double(CodeWriter) }
 
   before do
     allow(parser).to receive(:call)
+    allow(code_writer).to receive(:call)
   end
 
   context 'a file containing simple vm commands is added' do

@@ -1,13 +1,15 @@
 class Main
-  def initialize(parser:)
+  def initialize(parser:, code_writer:)
     @parser = parser
+    @code_writer = code_writer
   end
 
-  attr_reader :parser
-  private :parser
+  attr_reader :parser, :code_writer
+  private :parser, :code_writer
 
   def call(file_to_be_translated)
     parsed_code = parser.call(file_to_be_translated)
+    assembly_code = code_writer.call(parsed_code)
 
     generate_name_of_output_file(file_to_be_translated)
   end
