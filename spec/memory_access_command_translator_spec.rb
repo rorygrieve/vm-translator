@@ -89,6 +89,25 @@ RSpec.describe MemoryAccessCommandTranslator do
             )
         end
       end
+
+      context 'temp' do
+        let(:parsed_code) { ['push', 'temp', '3'] }
+
+        it 'converts it to assembly' do
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// push temp 3',
+                '@8',
+                'D=M',
+                '@SP',
+                'M=M+1',
+                'A=M-1',
+                'M=D',
+              ]
+            )
+        end
+      end
     end
 
     context 'pop commands' do
@@ -190,6 +209,25 @@ RSpec.describe MemoryAccessCommandTranslator do
                 'D=M',
                 '@addr',
                 'A=M',
+                'M=D',
+              ]
+            )
+        end
+      end
+
+      context 'temp' do
+        let(:parsed_code) { ['pop', 'temp', '6'] }
+
+        it 'converts it to assembly' do
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// pop temp 6',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@11',
                 'M=D',
               ]
             )
