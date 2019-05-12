@@ -14,21 +14,14 @@ RSpec.describe CodeWriter do
       end
     end
 
-    context 'add' do
+    context 'arithmetic commands' do
       let(:parsed_code) { ['add'] }
-      it 'converts it to assembly' do
-        expect(code_writer.call(parsed_code))
-          .to eq(
-            [
-              '// add',
-              '@SP',
-              'M=M-1',
-              'A=M',
-              'D=M',
-              'A=A-1',
-              'M=D+M',
-            ]
-          )
+
+      it 'calls ArithmeticCommandTranslator' do
+        allow(ArithmeticCommandTranslator).to receive(:call)
+        code_writer.call(parsed_code)
+
+        expect(ArithmeticCommandTranslator).to have_received(:call)
       end
     end
   end
