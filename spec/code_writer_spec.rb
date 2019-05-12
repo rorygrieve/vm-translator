@@ -51,6 +51,32 @@ RSpec.describe CodeWriter do
             )
         end
       end
+
+      context 'pop local' do
+        let(:parsed_code) { ['pop local 3'] }
+
+        it 'converts it to assembly' do
+          expect(code_writer.call(parsed_code))
+            .to eq(
+              [
+                '// pop local 3',
+                '@3',
+                'D=A',
+                '@LCL',
+                'D=M+D',
+                '@addr',
+                'M=D',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@addr',
+                'A=M',
+                'M=D',
+              ]
+            )
+        end
+      end
     end
 
     context 'arithmetic commands' do
