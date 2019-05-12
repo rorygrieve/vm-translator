@@ -51,6 +51,84 @@ RSpec.describe CodeWriter do
             )
         end
       end
+
+      context 'pop argument' do
+        let(:parsed_code) { ['pop argument 2'] }
+
+        it 'converts it to assembly' do
+          expect(code_writer.call(parsed_code))
+            .to eq(
+              [
+                '// pop argument 2',
+                '@2',
+                'D=A',
+                '@ARG',
+                'D=M+D',
+                '@addr',
+                'M=D',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@addr',
+                'A=M',
+                'M=D',
+              ]
+            )
+        end
+      end
+
+      context 'pop this' do
+        let(:parsed_code) { ['pop this 4'] }
+
+        it 'converts it to assembly' do
+          expect(code_writer.call(parsed_code))
+            .to eq(
+              [
+                '// pop this 4',
+                '@4',
+                'D=A',
+                '@THIS',
+                'D=M+D',
+                '@addr',
+                'M=D',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@addr',
+                'A=M',
+                'M=D',
+              ]
+            )
+        end
+      end
+
+      context 'pop that' do
+        let(:parsed_code) { ['pop that 5'] }
+
+        it 'converts it to assembly' do
+          expect(code_writer.call(parsed_code))
+            .to eq(
+              [
+                '// pop that 5',
+                '@5',
+                'D=A',
+                '@THAT',
+                'D=M+D',
+                '@addr',
+                'M=D',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@addr',
+                'A=M',
+                'M=D',
+              ]
+            )
+        end
+      end
     end
 
     context 'add' do

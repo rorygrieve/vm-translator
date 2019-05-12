@@ -1,4 +1,10 @@
 class CodeWriter
+  SYMBOLS = {
+    'local' => 'LCL',
+    'argument' => 'ARG',
+    'this' => 'THIS',
+    'that' => 'THAT',
+  }
 
   def self.call(code)
     code.map { |line|
@@ -45,7 +51,7 @@ class CodeWriter
         "// #{command.join(" ")}",
         "@#{command[2]}",
         'D=A',
-        '@LCL',
+        "@#{SYMBOLS[command[1]]}",
         'D=M+D',
         '@addr',
         'M=D',
