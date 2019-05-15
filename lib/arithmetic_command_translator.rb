@@ -21,6 +21,13 @@ class ArithmeticCommandTranslator
         'A=A-1',
         'M=M-D',
       ]
+    when 'neg'
+      [
+        '// neg',
+        '@SP',
+        'A=M',
+        'M=-M',
+      ]
     end
   end
 end

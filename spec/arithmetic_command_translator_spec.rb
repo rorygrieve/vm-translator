@@ -40,5 +40,21 @@ RSpec.describe ArithmeticCommandTranslator do
           )
       end
     end
+
+    context 'neg' do
+      let(:parsed_code) { 'neg' }
+
+      it 'converts it to assembly' do
+        expect(arithmetic_command_translator.call(parsed_code))
+          .to eq(
+            [
+              '// neg',
+              '@SP',
+              'A=M',
+              'M=-M',
+            ]
+          )
+      end
+    end
   end
 end
