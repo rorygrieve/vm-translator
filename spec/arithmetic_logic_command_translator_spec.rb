@@ -95,6 +95,22 @@ RSpec.describe ArithmeticLogicCommandTranslator do
       end
     end
 
+    context 'not' do
+      let(:parsed_code) { 'not' }
+
+      it 'converts it to assembly' do
+        expect(arithmetic_logic_command_translator.call(parsed_code))
+          .to eq(
+            [
+              '// not',
+              '@SP',
+              'A=M-1',
+              'M=!M',
+            ]
+          )
+      end
+    end
+
     context 'unrecognized command' do
       let(:parsed_code) { 'unknown' }
 
