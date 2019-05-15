@@ -75,5 +75,24 @@ RSpec.describe ArithmeticLogicCommandTranslator do
           )
       end
     end
+
+    context 'or' do
+      let(:parsed_code) { 'or' }
+
+      it 'converts it to assembly' do
+        expect(arithmetic_logic_command_translator.call(parsed_code))
+          .to eq(
+            [
+              '// or',
+              '@SP',
+              'M=M-1',
+              'A=M',
+              'D=M',
+              'A=A-1',
+              'M=D|M',
+            ]
+          )
+      end
+    end
   end
 end
