@@ -48,6 +48,8 @@ class ArithmeticLogicCommandTranslator
         'A=A-1',
         'M=D|M',
       ]
+    else
+      raise StandardError.new("Unrecognized command: #{command}")
     end
   end
 end

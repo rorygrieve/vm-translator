@@ -13,6 +13,8 @@ class MemoryAccessCommandTranslator
       convert_push_command(command)
     when 'pop'
       convert_pop_command(command)
+    else
+      raise_error(command)
     end
   end
 
@@ -54,6 +56,8 @@ class MemoryAccessCommandTranslator
         'A=M-1',
         'M=D',
       ]
+    else
+      raise_error(command)
     end
   end
 
@@ -86,6 +90,12 @@ class MemoryAccessCommandTranslator
         "@#{TEMP_BASE_MEMORY_ADDRESS + command[2].to_i}",
         'M=D',
       ]
+    else
+      raise_error(command)
     end
+  end
+
+  def self.raise_error(command)
+    raise StandardError.new("Cannot translate command: #{command.join(" ")}")
   end
 end

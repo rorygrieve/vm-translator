@@ -108,6 +108,18 @@ RSpec.describe MemoryAccessCommandTranslator do
             )
         end
       end
+
+      context 'cannot translate' do
+        let(:parsed_code) { ['push', 'unknown', '6'] }
+
+        it 'raises an error' do
+          expect{ memory_access_command_translator.call(parsed_code) }
+            .to raise_error(
+              StandardError,
+              /Cannot translate command: push unknown 6/,
+            )
+        end
+      end
     end
 
     context 'pop commands' do
@@ -230,6 +242,32 @@ RSpec.describe MemoryAccessCommandTranslator do
                 '@11',
                 'M=D',
               ]
+            )
+        end
+      end
+
+      context 'cannot translate' do
+        let(:parsed_code) { ['pop', 'unknown', '6'] }
+
+        it 'raises an error' do
+          expect{ memory_access_command_translator.call(parsed_code) }
+            .to raise_error(
+              StandardError,
+              /Cannot translate command: pop unknown 6/,
+            )
+        end
+      end
+    end
+
+    context 'unrecognized command' do
+      context 'cannot translate' do
+        let(:parsed_code) { ['unknown', 'temp', '6'] }
+
+        it 'raises an error' do
+          expect{ memory_access_command_translator.call(parsed_code) }
+            .to raise_error(
+              StandardError,
+              /Cannot translate command: unknown temp 6/,
             )
         end
       end

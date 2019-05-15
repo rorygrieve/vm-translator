@@ -94,5 +94,14 @@ RSpec.describe ArithmeticLogicCommandTranslator do
           )
       end
     end
+
+    context 'unrecognized command' do
+      let(:parsed_code) { 'unknown' }
+
+      it 'raises an error' do
+        expect{ arithmetic_logic_command_translator.call(parsed_code) }
+          .to raise_error(StandardError, /Unrecognized command: unknown/)
+      end
+    end
   end
 end

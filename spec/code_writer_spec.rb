@@ -24,5 +24,15 @@ RSpec.describe CodeWriter do
         expect(ArithmeticLogicCommandTranslator).to have_received(:call)
       end
     end
+
+    context 'cannot translate line' do
+      let(:parsed_code) { ['bad bad'] }
+
+      it 'raises an error' do
+        expect {code_writer.call(parsed_code) }
+          .to raise_error(StandardError, /Cannot translate line: bad bad/)
+
+      end
+    end
   end
 end

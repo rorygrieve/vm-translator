@@ -18,6 +18,8 @@ class CodeWriter
       MemoryAccessCommandTranslator.call(split_line)
     when 1
       ArithmeticLogicCommandTranslator.call(line)
+    else
+      raise StandardError.new("Cannot translate line: #{line}")
     end
   end
 end
