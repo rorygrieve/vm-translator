@@ -1,5 +1,5 @@
 require_relative './memory_access_command_translator'
-require_relative './arithmetic_command_translator'
+require_relative './arithmetic_logic_command_translator'
 
 class CodeWriter
   def self.call(code)
@@ -17,7 +17,7 @@ class CodeWriter
     when 3
       MemoryAccessCommandTranslator.call(split_line)
     when 1
-      ArithmeticCommandTranslator.call(line)
+      ArithmeticLogicCommandTranslator.call(line)
     end
   end
 end

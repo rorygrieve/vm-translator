@@ -18,10 +18,10 @@ RSpec.describe CodeWriter do
       let(:parsed_code) { ['add'] }
 
       it 'calls ArithmeticCommandTranslator' do
-        allow(ArithmeticCommandTranslator).to receive(:call)
+        allow(ArithmeticLogicCommandTranslator).to receive(:call)
         code_writer.call(parsed_code)
 
-        expect(ArithmeticCommandTranslator).to have_received(:call)
+        expect(ArithmeticLogicCommandTranslator).to have_received(:call)
       end
     end
   end
