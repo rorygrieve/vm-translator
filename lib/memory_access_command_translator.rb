@@ -19,6 +19,10 @@ class MemoryAccessCommandTranslator
     end
   end
 
+  class <<self
+    attr_accessor :filename
+  end
+
   private
 
   def self.convert_push_command(command)
@@ -67,6 +71,16 @@ class MemoryAccessCommandTranslator
         'A=M-1',
         'M=D',
       ]
+    when 'static'
+      [
+        "// #{command.join(" ")}",
+        "@#{filename}.#{command[2]}",
+        'D=M',
+        '@SP',
+        'M=M+1',
+        'A=M-1',
+        'M=D',
+      ]
     else
       raise_error(command)
     end
@@ -109,6 +123,16 @@ class MemoryAccessCommandTranslator
         'A=M',
         'D=M',
         "@#{POINTER_BASE_MEMORY_ADDRESS + command[2].to_i}",
+        'M=D',
+      ]
+    when 'static'
+      [
+        "// #{command.join(" ")}",
+        '@SP',
+        'M=M-1',
+        'A=M',
+        'D=M',
+        "@#{filename}.#{command[2]}",
         'M=D',
       ]
     else

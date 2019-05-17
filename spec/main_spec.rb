@@ -12,6 +12,10 @@ RSpec.describe Main do
   let(:parser) { class_double(Parser, call: 'some parsed vm code') }
   let(:code_writer) { class_double(CodeWriter, call: nil) }
 
+  before do
+    allow(code_writer).to receive(:filename=)
+  end
+
   describe '#call' do
     before do
       allow(File).to receive(:open).and_return("something")

@@ -128,6 +128,27 @@ RSpec.describe MemoryAccessCommandTranslator do
         end
       end
 
+      context 'static' do
+        let(:parsed_code) { ['push', 'static', '6'] }
+
+        it 'converts it to assembly' do
+          memory_access_command_translator.filename = 'Test'
+
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// push static 6',
+                '@Test.6',
+                'D=M',
+                '@SP',
+                'M=M+1',
+                'A=M-1',
+                'M=D',
+              ]
+            )
+        end
+      end
+
       context 'cannot translate' do
         let(:parsed_code) { ['push', 'unknown', '6'] }
 
@@ -278,6 +299,27 @@ RSpec.describe MemoryAccessCommandTranslator do
                 'A=M',
                 'D=M',
                 '@4',
+                'M=D',
+              ]
+            )
+        end
+      end
+
+      context 'static' do
+        let(:parsed_code) { ['pop', 'static', '7'] }
+
+        it 'converts it to assembly' do
+          memory_access_command_translator.filename = 'Test'
+
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// pop static 7',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@Test.7',
                 'M=D',
               ]
             )
