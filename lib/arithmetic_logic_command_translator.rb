@@ -105,6 +105,31 @@ class ArithmeticLogicCommandTranslator
         'M=0',
         '(FINISH)',
       ]
+    when 'eq'
+      [
+        '// eq',
+        '@SP',
+        'M=M-1',
+        'A=M',
+        'D=M',
+        'A=A-1',
+        'D=M-D',
+        '@TRUE',
+        'D;JEQ',
+        '@FALSE',
+        '0;JMP',
+        '(TRUE)',
+        '@SP',
+        'A=M-1',
+        'M=-1',
+        '@FINISH',
+        '0;JMP',
+        '(FALSE)',
+        '@SP',
+        'A=M-1',
+        'M=0',
+        '(FINISH)',
+      ]
     else
       raise StandardError.new("Unrecognized command: #{command}")
     end
