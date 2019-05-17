@@ -26,7 +26,7 @@ class ArithmeticLogicCommandTranslator
       [
         '// neg',
         '@SP',
-        'A=M',
+        'A=M-1',
         'M=-M',
       ]
     when 'and'

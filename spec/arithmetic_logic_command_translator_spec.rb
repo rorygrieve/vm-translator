@@ -53,7 +53,7 @@ RSpec.describe ArithmeticLogicCommandTranslator do
             [
               '// neg',
               '@SP',
-              'A=M',
+              'A=M-1',
               'M=-M',
             ]
           )
