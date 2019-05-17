@@ -13,7 +13,7 @@ class ArithmeticLogicCommandTranslator
       ]
     when 'sub'
       [
-        '// subtract',
+        '// sub',
         '@SP',
         'M=M-1',
         'A=M',

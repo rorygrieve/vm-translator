@@ -29,7 +29,7 @@ RSpec.describe ArithmeticLogicCommandTranslator do
         expect(arithmetic_logic_command_translator.call(parsed_code))
           .to eq(
             [
-              '// subtract',
+              '// sub',
               '@SP',
               'M=M-1',
               'A=M',
