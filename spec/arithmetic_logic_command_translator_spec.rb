@@ -145,6 +145,40 @@ RSpec.describe ArithmeticLogicCommandTranslator do
       end
     end
 
+    context 'greater than' do
+      let(:parsed_code) { 'gt' }
+
+      it 'converts it to assembly' do
+        expect(arithmetic_logic_command_translator.call(parsed_code))
+          .to eq(
+            [
+              '// gt',
+              '@SP',
+              'M=M-1',
+              'A=M',
+              'D=M',
+              'A=A-1',
+              'D=D-M',
+              '@TRUE',
+              'D;JLT',
+              '@FALSE',
+              '0;JMP',
+              '(TRUE)',
+              '@SP',
+              'A=M-1',
+              'M=-1',
+              '@FINISH',
+              '0;JMP',
+              '(FALSE)',
+              '@SP',
+              'A=M-1',
+              'M=0',
+              '(FINISH)',
+            ]
+          )
+      end
+    end
+
     context 'unrecognized command' do
       let(:parsed_code) { 'unknown' }
 
