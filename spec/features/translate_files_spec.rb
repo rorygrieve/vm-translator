@@ -28,6 +28,15 @@ RSpec.describe 'Translate files to assembly' do
     end
   end
 
+  context 'a file containing pointer commands is added' do
+    it 'is translated into assembly' do
+      main.call('spec/fixtures/PointerTest.vm')
+
+      expect(File).to exist('lib/output/PointerTest.asm')
+      expect(IO.read('lib/output/PointerTest.asm')).to eq(IO.read('spec/fixtures/PointerTest.asm'))
+    end
+  end
+
   after do
     Dir["lib/output/*"].each do |file|
       File.delete(file)
