@@ -3,6 +3,9 @@ require 'arithmetic_logic_command_translator'
 RSpec.describe ArithmeticLogicCommandTranslator do
   subject(:arithmetic_logic_command_translator) { ArithmeticLogicCommandTranslator }
   describe '#call' do
+    before do
+      arithmetic_logic_command_translator.class_variable_set(:@@number, 0)
+    end
     context 'add' do
       let(:parsed_code) { 'add' }
 
@@ -125,21 +128,21 @@ RSpec.describe ArithmeticLogicCommandTranslator do
               'D=M',
               'A=A-1',
               'D=M-D',
-              '@TRUE',
+              '@TRUE.1',
               'D;JLT',
-              '@FALSE',
+              '@FALSE.1',
               '0;JMP',
-              '(TRUE)',
+              '(TRUE.1)',
               '@SP',
               'A=M-1',
               'M=-1',
-              '@FINISH',
+              '@FINISH.1',
               '0;JMP',
-              '(FALSE)',
+              '(FALSE.1)',
               '@SP',
               'A=M-1',
               'M=0',
-              '(FINISH)',
+              '(FINISH.1)',
             ]
           )
       end
@@ -159,21 +162,21 @@ RSpec.describe ArithmeticLogicCommandTranslator do
               'D=M',
               'A=A-1',
               'D=D-M',
-              '@TRUE',
+              '@TRUE.1',
               'D;JLT',
-              '@FALSE',
+              '@FALSE.1',
               '0;JMP',
-              '(TRUE)',
+              '(TRUE.1)',
               '@SP',
               'A=M-1',
               'M=-1',
-              '@FINISH',
+              '@FINISH.1',
               '0;JMP',
-              '(FALSE)',
+              '(FALSE.1)',
               '@SP',
               'A=M-1',
               'M=0',
-              '(FINISH)',
+              '(FINISH.1)',
             ]
           )
       end
@@ -193,21 +196,21 @@ RSpec.describe ArithmeticLogicCommandTranslator do
               'D=M',
               'A=A-1',
               'D=M-D',
-              '@TRUE',
+              '@TRUE.1',
               'D;JEQ',
-              '@FALSE',
+              '@FALSE.1',
               '0;JMP',
-              '(TRUE)',
+              '(TRUE.1)',
               '@SP',
               'A=M-1',
               'M=-1',
-              '@FINISH',
+              '@FINISH.1',
               '0;JMP',
-              '(FALSE)',
+              '(FALSE.1)',
               '@SP',
               'A=M-1',
               'M=0',
-              '(FINISH)',
+              '(FINISH.1)',
             ]
           )
       end

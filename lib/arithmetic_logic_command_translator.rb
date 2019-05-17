@@ -1,4 +1,5 @@
 class ArithmeticLogicCommandTranslator
+  @@number = 0
   def self.call(command)
     case command
     when 'add'
@@ -56,6 +57,7 @@ class ArithmeticLogicCommandTranslator
         'M=!M',
       ]
     when 'lt'
+      next_number
       [
         '// lt',
         '@SP',
@@ -64,23 +66,24 @@ class ArithmeticLogicCommandTranslator
         'D=M',
         'A=A-1',
         'D=M-D',
-        '@TRUE',
+        "@TRUE.#{@@number}",
         'D;JLT',
-        '@FALSE',
+        "@FALSE.#{@@number}",
         '0;JMP',
-        '(TRUE)',
+        "(TRUE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=-1',
-        '@FINISH',
+        "@FINISH.#{@@number}",
         '0;JMP',
-        '(FALSE)',
+        "(FALSE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=0',
-        '(FINISH)',
+        "(FINISH.#{@@number})",
       ]
     when 'gt'
+      next_number
       [
         '// gt',
         '@SP',
@@ -89,23 +92,24 @@ class ArithmeticLogicCommandTranslator
         'D=M',
         'A=A-1',
         'D=D-M',
-        '@TRUE',
+        "@TRUE.#{@@number}",
         'D;JLT',
-        '@FALSE',
+        "@FALSE.#{@@number}",
         '0;JMP',
-        '(TRUE)',
+        "(TRUE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=-1',
-        '@FINISH',
+        "@FINISH.#{@@number}",
         '0;JMP',
-        '(FALSE)',
+        "(FALSE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=0',
-        '(FINISH)',
+        "(FINISH.#{@@number})",
       ]
     when 'eq'
+      next_number
       [
         '// eq',
         '@SP',
@@ -114,24 +118,30 @@ class ArithmeticLogicCommandTranslator
         'D=M',
         'A=A-1',
         'D=M-D',
-        '@TRUE',
+        "@TRUE.#{@@number}",
         'D;JEQ',
-        '@FALSE',
+        "@FALSE.#{@@number}",
         '0;JMP',
-        '(TRUE)',
+        "(TRUE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=-1',
-        '@FINISH',
+        "@FINISH.#{@@number}",
         '0;JMP',
-        '(FALSE)',
+        "(FALSE.#{@@number})",
         '@SP',
         'A=M-1',
         'M=0',
-        '(FINISH)',
+        "(FINISH.#{@@number})",
       ]
     else
       raise StandardError.new("Unrecognized command: #{command}")
     end
+  end
+
+  private
+
+  def self.next_number
+    @@number += 1
   end
 end
