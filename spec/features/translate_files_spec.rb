@@ -37,6 +37,15 @@ RSpec.describe 'Translate files to assembly' do
     end
   end
 
+  context 'a file containing static variable commands is added' do
+    it 'is translated into assembly' do
+      main.call('spec/fixtures/StaticTest.vm')
+
+      expect(File).to exist('lib/output/StaticTest.asm')
+      expect(IO.read('lib/output/StaticTest.asm')).to eq(IO.read('spec/fixtures/StaticTest.asm'))
+    end
+  end
+
   after do
     Dir["lib/output/*"].each do |file|
       File.delete(file)
