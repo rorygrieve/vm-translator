@@ -10,13 +10,21 @@ RSpec.describe 'Translate files to assembly' do
     )
   }
 
-
   context 'a file containing simple vm commands is added' do
     it 'is translated into assembly' do
       main.call('spec/fixtures/SimpleAdd.vm')
 
       expect(File).to exist('lib/output/SimpleAdd.asm')
       expect(IO.read('lib/output/SimpleAdd.asm')).to eq(IO.read('spec/fixtures/SimpleAdd.asm'))
+    end
+  end
+
+  context 'a file containing arithmetic and logic commands is added' do
+    it 'is translated into assembly' do
+      main.call('spec/fixtures/StackTest.vm')
+
+      expect(File).to exist('lib/output/StackTest.asm')
+      expect(IO.read('lib/output/StackTest.asm')).to eq(IO.read('spec/fixtures/StackTest.asm'))
     end
   end
 
