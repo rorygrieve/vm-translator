@@ -6,6 +6,7 @@ class MemoryAccessCommandTranslator
     'that' => 'THAT',
   }
   TEMP_BASE_MEMORY_ADDRESS = 5
+  POINTER_BASE_MEMORY_ADDRESS = 3
 
   def self.call(command)
     case command[0]
@@ -56,6 +57,16 @@ class MemoryAccessCommandTranslator
         'A=M-1',
         'M=D',
       ]
+    when 'pointer'
+      [
+        "// #{command.join(" ")}",
+        "@#{POINTER_BASE_MEMORY_ADDRESS + command[2].to_i}",
+        'D=M',
+        '@SP',
+        'M=M+1',
+        'A=M-1',
+        'M=D',
+      ]
     else
       raise_error(command)
     end
@@ -88,6 +99,16 @@ class MemoryAccessCommandTranslator
         'A=M',
         'D=M',
         "@#{TEMP_BASE_MEMORY_ADDRESS + command[2].to_i}",
+        'M=D',
+      ]
+    when 'pointer'
+      [
+        "// #{command.join(" ")}",
+        '@SP',
+        'M=M-1',
+        'A=M',
+        'D=M',
+        "@#{POINTER_BASE_MEMORY_ADDRESS + command[2].to_i}",
         'M=D',
       ]
     else

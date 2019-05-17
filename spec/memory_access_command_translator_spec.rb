@@ -109,6 +109,25 @@ RSpec.describe MemoryAccessCommandTranslator do
         end
       end
 
+      context 'pointer' do
+        let(:parsed_code) { ['push', 'pointer', '0'] }
+
+        it 'converts it to assembly' do
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// push pointer 0',
+                '@3',
+                'D=M',
+                '@SP',
+                'M=M+1',
+                'A=M-1',
+                'M=D',
+              ]
+            )
+        end
+      end
+
       context 'cannot translate' do
         let(:parsed_code) { ['push', 'unknown', '6'] }
 
@@ -240,6 +259,25 @@ RSpec.describe MemoryAccessCommandTranslator do
                 'A=M',
                 'D=M',
                 '@11',
+                'M=D',
+              ]
+            )
+        end
+      end
+
+      context 'pointer' do
+        let(:parsed_code) { ['pop', 'pointer', '1'] }
+
+        it 'converts it to assembly' do
+          expect(memory_access_command_translator.call(parsed_code))
+            .to eq(
+              [
+                '// pop pointer 1',
+                '@SP',
+                'M=M-1',
+                'A=M',
+                'D=M',
+                '@4',
                 'M=D',
               ]
             )
